@@ -1,0 +1,130 @@
+Iciquestionpaper.com
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Question Paper Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f2f2f2;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    select, button {
+      margin: 5px;
+      padding: 8px;
+      font-size: 16px;
+    }
+
+    .paper {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 700px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .paper h2 {
+      text-align: center;
+      color: #444;
+    }
+
+    .paper p {
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Question Paper Generator</h1>
+
+  <div class="form-group">
+    <label for="class">Class:</label>
+    <select id="class">
+      <option value="5">5</option>
+      <option value="6">6</option>
+    </select>
+
+    <label for="subject">Subject:</label>
+    <select id="subject">
+      <option value="math">Math</option>
+      <option value="science">Science</option>
+    </select>
+
+    <button onclick="generatePaper()">Generate</button>
+  </div>
+
+  <div id="question-paper" class="paper"></div>
+
+  <script>
+    const questionBank = {
+      class5: {
+        math: [
+          "What is 5 + 3?",
+          "Write the multiplication table of 6.",
+          "What is the value of 7 × 8?",
+          "Define addition and subtraction.",
+          "What is the largest 2-digit number?"
+        ],
+        science: [
+          "What is photosynthesis?",
+          "Name three states of matter.",
+          "Why is the sky blue?",
+          "What is the function of roots in plants?",
+          "Name one example of a herbivore animal."
+        ]
+      },
+      class6: {
+        math: [
+          "What is 12 × 12?",
+          "Simplify: 24 ÷ (3 × 2)",
+          "What is a prime number?",
+          "Define LCM and HCF.",
+          "Solve: 2x + 3 = 7"
+        ],
+        science: [
+          "What is gravity?",
+          "Name the parts of a plant cell.",
+          "Why do we need air to breathe?",
+          "What is the function of the heart?",
+          "Give two examples of solids."
+        ]
+      }
+    };
+
+    function generatePaper() {
+      const cls = document.getElementById("class").value;
+      const subject = document.getElementById("subject").value;
+
+      const key = `class${cls}`;
+      const questions = questionBank[key]?.[subject];
+
+      if (!questions) {
+        alert("No questions found.");
+        return;
+      }
+
+      const selected = questions.sort(() => 0.5 - Math.random()).slice(0, 5);
+      const container = document.getElementById("question-paper");
+
+      container.innerHTML = `<h2>Class ${cls} - ${subject.charAt(0).toUpperCase() + subject.slice(1)} Question Paper</h2>`;
+      selected.forEach((q, i) => {
+        const p = document.createElement("p");
+        p.textContent = `${i + 1}. ${q}`;
+        container.appendChild(p);
+      });
+    }
+  </script>
+</body>
+</html>
